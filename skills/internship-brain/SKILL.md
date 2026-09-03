@@ -71,6 +71,7 @@ Maintain:
 - `INDEX.md`
 - `PROJECTS.md`
 - `STORIES.md`
+- `BEHAVIORAL_QA.md` — direct written answers to the standard behavioral questions (this file MUST be produced, not just implied by STORIES.md)
 - `TECHNICAL.md`
 - `RESUME.md`
 - `BULLET_DEFENSE.md`
@@ -78,6 +79,7 @@ Maintain:
 - `DECISIONS.md`
 - `DEBUGGING.md`
 - `OPEN_QUESTIONS.md`
+- `COVERAGE.md` — the self-audit output (see "Coverage self-audit" at the end)
 - `metadata.json`
 - `prs/<repo>-<pr-number>.md`
 
@@ -1062,3 +1064,22 @@ Report:
 10. files updated.
 
 The persistent evidence bank is the source of truth.
+
+# Coverage self-audit (run at the END of every sync — do not skip)
+
+The most common failure is silent under-coverage: sections that are *implied* by this skill but never actually produced, and repeated structures (per-bullet, per-story) where the first few are complete and the rest are stubbed. After every sync, run this checklist and write the result to `COVERAGE.md`, listing every gap. Then fill the high-value gaps before reporting done.
+
+Definition of done — verify each and record ✓ / ✗ + a note:
+
+1. **Behavioral questions.** `BEHAVIORAL_QA.md` exists and has a written, evidence-backed answer under EVERY standard question (or an explicit "NO EVIDENCE YET"). These are a build-time ARTIFACT, not just a retrieval-time capability — produce the file.
+2. **Bullet defense completeness.** EVERY resume-worthy bullet in `RESUME.md` has a full `BULLET_DEFENSE.md` sheet, and every sheet has BOTH a `### 15-second answer` and a `### 45-second answer` plus `### Likely interviewer follow-ups`. No abbreviated/stub sheets for later bullets.
+3. **Story structure.** Every story in `STORIES.md` has 15-second AND 30-second versions, `Alternatives considered`, and `What I would do differently`. The story-to-dimension map covers ALL 15 dimensions (technical challenge, disagreement, pushback, hard decision, failure, debugging, ambiguity, changed-approach, ownership, leadership, teamwork, receiving-feedback, moving-quickly, prioritization/tradeoff, reliability/performance).
+4. **INDEX dimension map.** `INDEX.md` "Best behavioral stories" names a best candidate for all 15 dimensions (not just the ones with strong evidence).
+5. **PR evidence coverage.** Every MERGED authored PR has a `prs/<repo>-<n>.md` file (or is explicitly folded into a `_cluster` file). No merged PR silently missing.
+6. **Freshness.** Every synthesized file reflects the latest sync's work (grep the newest project's keyword across INDEX/PROJECTS/STORIES/METRICS/RESUME/TECHNICAL).
+7. **Metadata.** `metadata.json` records per PR: repo, number, url, title, state, createdAt, mergedAt, updatedAt, headSha, additions, deletions, changedFiles, processed.
+
+Why coverage fails (and the fix, so it does not recur):
+- **Repeated structure gets abbreviated** → the templates in `brain-template/` are SCAFFOLDS with every sub-section pre-written as a header; fill each or write "NO EVIDENCE", never silently drop.
+- **Capability vs artifact** → anything this skill says the bank "should be able to answer" must be written to a file, not left implicit.
+- The `COVERAGE.md` step turns silent gaps into a visible checklist every run.
